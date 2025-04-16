@@ -32,7 +32,8 @@ public:
     }
 
     ~Node(){
-        // forward数组中节点的删除由SkipList的析构函数处理，这里什么都不用做
+        // forward数组中节点的删除由SkipList的析构函数处理，这里只将所有指针置空
+        std::fill(forward.begin(), forward.end(), nullptr);
     }
 
     K getKey() const { return m_key; }
@@ -356,9 +357,16 @@ void SkipList<K, V>::loadFile(){
 
 template<typename K, typename V>
 void SkipList<K, V>::clear(Node<K, V>* node){
-    if(node->forward[0]){
-        clear(node->forward[0]);
+    // if(node->forward[0]){
+    //     clear(node->forward[0]);
+    // }
+    // delete node;
+
+    // 迭代析构之后的所有节点
+    while(node){
+        auto next = node->forward[0];
+        delete node;
+        node = next;
     }
-    delete node;
 }
 
