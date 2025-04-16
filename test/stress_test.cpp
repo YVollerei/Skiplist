@@ -38,6 +38,8 @@ void *getElement(void* threadid) {
 }
 
 int main() {
+    std::cout << "Stress Test: NUM_THREADS=" << NUM_THREADS << ", TEST_COUNT=" << TEST_COUNT << std::endl;
+
     srand (time(NULL));  
     {
         std::cout << "-----test insert-----" << std::endl;
@@ -48,7 +50,7 @@ int main() {
         auto start = std::chrono::high_resolution_clock::now();
 
         for( i = 0; i < NUM_THREADS; i++ ) {
-            std::cout << "main() : creating thread, " << i << std::endl;
+            // std::cout << "main() : creating thread, " << i << std::endl;
             rc = pthread_create(&threads[i], NULL, insertElement, (void*)i);
 
             if (rc) {
@@ -78,7 +80,7 @@ int main() {
         auto start = std::chrono::high_resolution_clock::now();
 
         for( i = 0; i < NUM_THREADS; i++ ) {
-            std::cout << "main() : creating thread, " << i << std::endl;
+            // std::cout << "main() : creating thread, " << i << std::endl;
             rc = pthread_create(&threads[i], NULL, getElement, (void *)i);
 
             if (rc) {
